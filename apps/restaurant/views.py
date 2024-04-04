@@ -1,6 +1,6 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 
-from .models import Home
+from .models import Home, WorkTime
 
 
 class HomeView(TemplateView):
@@ -73,3 +73,17 @@ class ContactView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["home"] = Home.objects.first()
         return context
+
+
+def worktimes(request):
+    worktimes = WorkTime.objects.all()
+    return {
+        'worktimes': worktimes
+    }
+
+
+def contacts(request):
+    home = Home.objects.first()
+    return {
+        'home': home
+    }
