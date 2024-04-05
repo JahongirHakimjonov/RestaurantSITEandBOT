@@ -8,6 +8,7 @@ from .views import (
     TeamView,
     TestimonialView,
     ContactView,
+    site_user,
 )
 
 app_name = "restaurant"
@@ -21,4 +22,5 @@ urlpatterns = [
     path("team/", TeamView.as_view(), name="team"),
     path("testimonial/", TestimonialView.as_view(), name="testimonial"),
     path("contact/", ContactView.as_view(), name="contact"),
+    path("site_user/", site_user, name="site_user"),
 ]

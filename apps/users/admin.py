@@ -35,5 +35,5 @@ class DailyMessagesAdmin(admin.ModelAdmin):
 
 @admin.register(SiteUsers)
 class SiteUsersAdmin(admin.ModelAdmin):
-    list_display = ("email",)
-    search_fields = ("email",)
+    list_display = ("useremail",)
+    search_fields = ("useremail",)

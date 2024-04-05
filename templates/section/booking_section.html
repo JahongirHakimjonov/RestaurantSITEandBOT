@@ -11,72 +11,76 @@
         </div>
         <div class="col-md-6 bg-dark d-flex align-items-center">
             <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
-                <h5 class="section-title ff-secondary text-start text-primary fw-normal">Reservation</h5>
-                <h1 class="text-white mb-4">Book A Table Online</h1>
-                <form>
+                <h5 class="section-title ff-secondary text-start text-primary fw-normal">Bron qilish</h5>
+                <h1 class="text-white mb-4">Onlayn joy bron qilish</h1>
+                <form method="post">
+                    {% csrf_token %}
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="name" placeholder="Your Name">
-                                <label for="name">Your Name</label>
+                                {{ form.full_name }}
+                                <label for="{{ form.full_name.id_for_label }}">Ismingiz</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="email" class="form-control" id="email" placeholder="Your Email">
-                                <label for="email">Your Email</label>
+                                {{ form.email }}
+                                <label for="{{ form.email.id_for_label }}">Emailingiz</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating date" id="date3" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" id="datetime"
-                                       placeholder="Date & Time" data-target="#date3" data-toggle="datetimepicker"/>
-                                <label for="datetime">Date & Time</label>
+                                {{ form.datetime }}
+                                <label for="{{ form.datetime.id_for_label }}">Sana & Vaqt</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <select class="form-select" id="select1">
-                                    <option value="1">People 1</option>
-                                    <option value="2">People 2</option>
-                                    <option value="3">People 3</option>
-                                </select>
-                                <label for="select1">No Of People</label>
+                                {{ form.guests }}
+                                <label for="{{ form.guests.id_for_label }}">Mehmonlar soni</label>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Special Request" id="message"
-                                              style="height: 100px"></textarea>
-                                <label for="message">Special Request</label>
+                                {{ form.phone }}
+                                <label for="{{ form.phone.id_for_label }}">Telefon raqamingiz</label>
+                            </div>
+                            <br>
+                            <div class="form-floating">
+                                {{ form.message }}
+                                <label for="{{ form.message.id_for_label }}">Xabaringizni qoldiring</label>
                             </div>
                         </div>
                         <div class="col-12">
-                            <button class="btn btn-primary w-100 py-3" type="submit">Book Now</button>
+                            <button class="btn btn-primary w-100 py-3" type="submit">Tasdiqlash</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content rounded-0">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Youtube Video</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- 16:9 aspect ratio -->
-                <div class="ratio ratio-16x9">
-                    <iframe class="embed-responsive-item" src="" id="video" allowfullscreen
-                            allowscriptaccess="always"
-                            allow="autoplay"></iframe>
+
+        <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Youtube Video</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- 16:9 aspect ratio -->
+                        <div class="ratio ratio-16x9">
+                            <iframe class="embed-responsive-item" src="https://youtu.be/cakEMtM-sck?si=lokq5KzJp7zGocIG"
+                                    id="video" allowfullscreen
+                                    allowscriptaccess="always"
+                                    allow="autoplay"></iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 <!-- Reservation Start -->

@@ -1,7 +1,7 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="utf-8">
@@ -52,8 +52,10 @@
     <div class="container-xxl position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
             <a href="{% url 'restaurant:home' %}" class="navbar-brand p-0">
-                <h1 class="text-primary m-0"><img src="{% static 'image/logo.png' %}" alt="Logo">{{ home.name }}
-                </h1>
+                <div class="d-flex align-items-center">
+                    <img src="/media/{{ home.logo }}" alt="logo" class="img-fluid" style="height: 50px;">
+                    <h1 class="text-primary m-0">{{ home.name }}</h1>
+                </div>
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -64,22 +66,25 @@
                     <a href="{% url 'restaurant:home' %}" class="nav-item nav-link active">Bosh sahifa</a>
                     <a href="{% url 'restaurant:service' %}" class="nav-item nav-link">Xizmatlar</a>
                     <a href="{% url 'restaurant:menu' %}" class="nav-item nav-link">Menyu</a>
+                    <a href="{% url 'restaurant:contact' %}" class="nav-item nav-link">Bog'lanish</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Sahifalar</a>
                         <div class="dropdown-menu m-0">
                             <a href="{% url 'restaurant:about' %}" class="dropdown-item">Biz haqimizda</a>
-                            <a href="{% url 'restaurant:booking' %}" class="dropdown-item">Bron qilish</a>
                             <a href="{% url 'restaurant:team' %}" class="dropdown-item">Bizning jamoa</a>
                             <a href="{% url 'restaurant:testimonial' %}" class="dropdown-item">Mijozlar fikri</a>
                         </div>
                     </div>
-                    <a href="{% url 'restaurant:contact' %}" class="nav-item nav-link">Bog'lanish</a>
                 </div>
-                <a href="{% url 'restaurant:booking' %}" class="btn btn-primary py-2 px-4">Joy buyurtma qilish</a>
+                <a href="{% url 'restaurant:booking' %}" class="btn btn-primary py-2 px-4">Joy bron qilish</a>
             </div>
         </nav>
     </div>
-
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            <p>{{ message }}</p>
+        </div>
+    {% endfor %}
 
 
     {% block content %}
@@ -118,9 +123,9 @@
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Ish vaqtlari</h4>
-                    {% for worktime in worktimes %}
-                        <h5 class="text-light fw-normal">{{ worktime.day }}</h5>
-                        <p>{{ worktime.start_time }} - {{ worktime.end_time }}</p>
+                    {% for time in worktime %}
+                        <h5 class="text-light fw-normal">{{ time.day }}</h5>
+                        <p>{{ time.start_time }} - {{ time.end_time }}</p>
                     {% endfor %}
                 </div>
 
@@ -129,47 +134,49 @@
                     <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Yangiliklar</h4>
                     <p>Yangiliklardan xabardor bo'lish uchun elektron pochtangizni kiritib yuborish tugmasini
                         bosing.</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <input type="email" name="useremail" class="form-control"
+                                   placeholder="Emailingizni kiriting"
+                                   required>
+                            <button type="submit" class="btn btn-primary">Yuborish</button>
+                        </div>
+                    </form>
                     <div class="position-relative mx-auto" style="max-width: 400px;">
-                        <input class="form-control border-primary w-100 py-3 ps-4 pe-5" type="text"
-                               placeholder="Email kiriting">
-                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">
-                            Yuborish
-                        </button>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">{{ home.name }}</a>, Barcha xizmatlar litsenziyalangan.
 
-                        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                        Muallif <a class="border-bottom" href="https://github.com/JahongirHakimjonov"> Jahongir
-                        Hakimjonov</a>
-                    </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <div class="footer-menu">
-                            <a href="{% url 'restaurant:home' %}">Home</a>
-                            {#                            <a href="">Cookies</a>#}
-                            {#                            <a href="">Privacy</a>#}
-                            {#                            <a href="">Terms</a>#}
-                            {#                            <a href="">Policy</a>#}
-                            <a href="">Support</a>
-                            <a href="">Help</a>
-                            <a href="">FQAs</a>
+
+                <div class="container">
+                    <div class="copyright">
+                        <div class="row">
+                            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                                &copy; <a class="border-bottom" href="{% url 'restaurant:home' %}">{{ home.name }}</a>,
+                                Barcha xizmatlar
+                                litsenziyalangan.
+
+                                <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                                Muallif <a class="border-bottom" href="https://github.com/JahongirHakimjonov"> Jahongir
+                                Hakimjonov</a>
+                            </div>
+                            <div class="col-md-6 text-center text-md-end">
+                                <div class="footer-menu">
+                                    <a href="{% url 'restaurant:home' %}">Bosh sahifa</a>
+                                    <a href="">Qo'llab & Quvvatlash xizmati</a>
+                                    <a href="{% url 'restaurant:contact' %}">Yordam</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Footer End -- >
+
+    <!/-- Back to Top -->
+            <a href="" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
         </div>
     </div>
-    <!-- Footer End -->
-
-
-    <!-- Back to Top -->
-    <a href="" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
 
 

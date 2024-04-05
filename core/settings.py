@@ -51,8 +51,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                'apps.restaurant.views.worktimes',
-                'apps.restaurant.views.contacts',
+                "apps.restaurant.views.worktimes",
+                "apps.restaurant.views.contacts",
             ],
         },
     },
@@ -60,23 +60,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "core.wsgi.application"
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('SQL_DATABASE'),
-        'USER': os.getenv('SQL_USER'),
-        'PASSWORD': os.getenv('SQL_PASSWORD'),
-        'HOST': os.getenv('SQL_HOST'),
-        'PORT': os.getenv('SQL_PORT')
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": os.getenv("SQL_DATABASE"),
+#         "USER": os.getenv("SQL_USER"),
+#         "PASSWORD": os.getenv("SQL_PASSWORD"),
+#         "HOST": os.getenv("SQL_HOST"),
+#         "PORT": os.getenv("SQL_PORT"),
+#     }
+# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {

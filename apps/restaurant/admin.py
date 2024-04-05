@@ -73,16 +73,16 @@ class PhoneNumbersAdmin(admin.ModelAdmin):
 
 @admin.register(MasterChef)
 class MasterChefAdmin(admin.ModelAdmin):
-    list_display = ("full_name", "title", "description", "role")
-    search_fields = ("full_name", "title", "description", "role")
-    list_filter = ("full_name", "title", "role")
+    list_display = ("full_name", "role")
+    search_fields = ("full_name", "role")
+    list_filter = ("full_name", "role")
 
 
 @admin.register(Testimonial)
 class TestimonialAdmin(admin.ModelAdmin):
-    list_display = ("name", "description")
-    search_fields = ("name", "description")
-    list_filter = ("name", "description")
+    list_display = ("full_name", "description", "profession")
+    search_fields = ("full_name", "description")
+    list_filter = ("full_name", "description")
 
 
 @admin.register(Services)
@@ -94,9 +94,9 @@ class ServicesAdmin(admin.ModelAdmin):
 
 @admin.register(MenuType)
 class MenuTypeAdmin(admin.ModelAdmin):
-    list_display = ("title", "description")
-    search_fields = ("title", "description")
-    list_filter = ("title", "description")
+    list_display = ("title",)
+    search_fields = ("title",)
+    list_filter = ("title",)
 
 
 @admin.register(Menu)
@@ -108,8 +108,8 @@ class MenuAdmin(admin.ModelAdmin):
 
 @admin.register(Reservation)
 class Reservation(admin.ModelAdmin):
-    list_display = ("full_name", "email", "phone", "date", "time", "guests", "message")
-    search_fields = ("full_name", "email", "phone", "date", "time", "guests", "message")
+    list_display = ("full_name", "email", "phone", "datetime", "guests", "message")
+    search_fields = ("full_name", "email", "phone", "datetime", "guests", "message")
 
 
 @admin.register(ContactUs)

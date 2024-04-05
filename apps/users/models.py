@@ -66,10 +66,10 @@ class DailyMessages(AbstractBaseModel):
 
 
 class SiteUsers(AbstractBaseModel):
-    email = models.EmailField(unique=True)
+    useremail = models.EmailField(unique=True)
 
     def __str__(self):
-        return f"{self.email}"
+        return f"{self.useremail}"
 
     class Meta:
         verbose_name_plural = "Sayt Foydalanuvchilar"

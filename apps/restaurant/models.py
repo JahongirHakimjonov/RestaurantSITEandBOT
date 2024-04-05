@@ -97,13 +97,11 @@ class About(AbstractBaseModel):
 
 class MasterChef(AbstractBaseModel):
     full_name = models.CharField(max_length=255)
-    title = models.CharField(max_length=255)
-    description = models.TextField()
     role = models.CharField(max_length=255)
     instagram = models.URLField()
     facebook = models.URLField()
-    twitter = models.URLField()
-    image = models.ImageField(upload_to="masterchef/")
+    telegram = models.URLField()
+    image = models.ImageField(upload_to="masterchef/", null=True, blank=True, default='/static/image/man.jpg')
 
     class Meta:
         verbose_name = "Master Chef"
@@ -115,9 +113,10 @@ class MasterChef(AbstractBaseModel):
 
 
 class Testimonial(AbstractBaseModel):
-    name = models.CharField(max_length=255)
+    full_name = models.CharField(max_length=255)
     description = models.TextField()
-    image = models.ImageField(upload_to="testimonial/")
+    profession = models.CharField(max_length=255)
+    image = models.ImageField(upload_to="testimonial/", null=True, blank=True, default='/static/image/profile.jpg')
 
     class Meta:
         verbose_name = "Testimonial"
@@ -125,12 +124,13 @@ class Testimonial(AbstractBaseModel):
         db_table = "testimonial"
 
     def __str__(self):
-        return self.name
+        return self.full_name
 
 
 class Services(AbstractBaseModel):
     title = models.CharField(max_length=255)
     description = models.TextField()
+    image = models.ImageField(upload_to="services/", null=True, blank=True, default='/static/image/logo.png')
 
     class Meta:
         verbose_name = "Service"
@@ -141,36 +141,24 @@ class Services(AbstractBaseModel):
         return self.title
 
 
-class MenuType(AbstractBaseModel):
-    title = models.CharField(max_length=255)
-    description = models.TextField()
+class MenuType(models.Model):
+    title = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.title
 
     class Meta:
         verbose_name = "Menu Type"
         verbose_name_plural = "Menu Types"
         db_table = "menu_type"
 
-    def __str__(self):
-        return self.title
 
-
-class Menu(AbstractBaseModel):
-    title = models.CharField(max_length=255)
+class Menu(models.Model):
+    menu_type = models.ForeignKey(MenuType, related_name='menu_items', on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
     description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    menu_type = models.ForeignKey(
-        MenuType,
-        related_name="menu_type",
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-    )
-    image = models.ImageField(upload_to="menu/")
-
-    class Meta:
-        verbose_name = "Menu"
-        verbose_name_plural = "Menus"
-        db_table = "menu"
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    image = models.ImageField(upload_to='menu_images', null=True, blank=True, default='/static/image/food.jpg')
 
     def __str__(self):
         return self.title
@@ -178,32 +166,31 @@ class Menu(AbstractBaseModel):
 
 class Reservation(AbstractBaseModel):
     GUESTS = (
-        (1, "1 Guest"),
-        (2, "2 Guests"),
-        (3, "3 Guests"),
-        (4, "4 Guests"),
-        (5, "5 Guests"),
-        (6, "6 Guests"),
-        (7, "7 Guests"),
-        (8, "8 Guests"),
-        (9, "9 Guests"),
-        (10, "10 Guests"),
-        (11, "11 Guests"),
-        (12, "12 Guests"),
-        (13, "13 Guests"),
-        (14, "14 Guests"),
-        (15, "15 Guests"),
-        (16, "16 Guests"),
-        (17, "17 Guests"),
-        (18, "18 Guests"),
-        (19, "19 Guests"),
-        (20, "20 Guests"),
+        (1, "1 ta"),
+        (2, "2 ta"),
+        (3, "3 ta"),
+        (4, "4 ta"),
+        (5, "5 ta"),
+        (6, "6 ta"),
+        (7, "7 ta"),
+        (8, "8 ta"),
+        (9, "9 ta"),
+        (10, "10 ta"),
+        (11, "11 ta"),
+        (12, "12 ta"),
+        (13, "13 ta"),
+        (14, "14 ta"),
+        (15, "15 ta"),
+        (16, "16 ta"),
+        (17, "17 ta"),
+        (18, "18 ta"),
+        (19, "19 ta"),
+        (20, "20 ta"),
     )
     full_name = models.CharField(max_length=255)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
-    date = models.DateField()
-    time = models.TimeField()
+    datetime = models.DateTimeField()
     guests = models.IntegerField(choices=GUESTS)
     message = models.TextField()
 
