@@ -11,6 +11,7 @@ services:
       - .:/app
       - static_volume:/app/static
       - media_volume:/app/media
+      - /var/certbot/conf:/etc/letsencrypt/:ro
     ports:
       - "8000:8000"
     env_file:
@@ -46,6 +47,16 @@ services:
     volumes:
       - static_volume:/app/static
       - media_volume:/app/media
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - static_volume:/app/static
+      - media_volume:/app/media
+    entrypoint: "/bin/sh -c"
+    command: "trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;"
+    depends_on:
+      - nginx
 
 volumes:
   media_volume:
