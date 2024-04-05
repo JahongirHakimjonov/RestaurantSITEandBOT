@@ -15,6 +15,5 @@ COPY ./compose/django/start /start
 RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 
-RUN apt-get update && apt-get install -y certbot python-certbot-nginx
 
 ENTRYPOINT ["/entrypoint"]

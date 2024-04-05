@@ -5,19 +5,39 @@ services:
     build:
       context: .
       dockerfile: ./compose/django/Dockerfile
-    image: restaurant_web
     command: /start
+    restart: always
+    expose:
+      - "8000"
     volumes:
       - .:/app
-      - static_volume:/app/static
-      - media_volume:/app/media
+      - static_volume:/var/www/static
+      - media_volume:/var/www/media
       - /var/certbot/conf:/etc/letsencrypt/:ro
-    ports:
-      - "8000:8000"
     env_file:
       - env/.env
     depends_on:
       - db
+
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - static_volume:/var/www/static
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    depends_on:
+      - web_service
+
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - /var/certbot/conf:/etc/letsencrypt/:rw
+      - /var/certbot/www/:/var/www/certbot/:rw
+    depends_on:
+      - nginx
 
   db:
     image: postgres:15-alpine
@@ -30,33 +50,6 @@ services:
       - POSTGRES_PASSWORD=1253
     ports:
       - "5432:5432"
-
-  nginx:
-    build:
-      context: .
-      dockerfile: ./compose/nginx/Dockerfile
-    ports:
-      - '80:80'
-      - '443:443'
-    depends_on:
-      - web_service
-    logging:
-      options:
-        max-size: '10m'
-        max-file: '3'
-    volumes:
-      - static_volume:/app/static
-      - media_volume:/app/media
-
-  certbot:
-    image: certbot/certbot
-    volumes:
-      - static_volume:/app/static
-      - media_volume:/app/media
-    entrypoint: "/bin/sh -c"
-    command: "trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;"
-    depends_on:
-      - nginx
 
 volumes:
   media_volume:
