@@ -137,9 +137,7 @@
                     <form method="post">
                         {% csrf_token %}
                         <div class="input-group mb-3">
-                            <input type="email" name="useremail" class="form-control"
-                                   placeholder="Emailingizni kiriting"
-                                   required>
+                            {{ form.useremail }}
                             <button type="submit" class="btn btn-primary">Yuborish</button>
                         </div>
                     </form>

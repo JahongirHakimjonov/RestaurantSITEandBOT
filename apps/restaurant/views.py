@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, FormView, ListView
 
-from .forms import ReservationCreateForm, ContactCreateForm
+from .forms import ReservationCreateForm, ContactCreateForm, UserCreateForm
 from .models import (
     Home,
     WorkTime,
@@ -23,8 +23,22 @@ from django.http import HttpResponseBadRequest
 from apps.users.models import SiteUsers
 
 
-class HomeView(TemplateView):
+class HomeView(FormView):
     template_name = "index.html"
+    form_class = UserCreateForm
+    success_url = reverse_lazy("restaurant:home")
+
+    def form_valid(self, form):
+        useremail = form.cleaned_data.get("useremail")
+
+        SiteUsers.objects.create(
+            useremail=useremail
+        )
+        messages.success(
+            self.request,
+            "Ro'yxatdan o'tdingiz, tez orada siz bilan bog'lanishadi. Rahmat!",
+        )
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -67,8 +81,22 @@ class ContactView(FormView):
         return context
 
 
-class AboutView(TemplateView):
+class AboutView(FormView):
     template_name = "about.html"
+    form_class = UserCreateForm
+    success_url = reverse_lazy("restaurant:about")
+
+    def form_valid(self, form):
+        useremail = form.cleaned_data.get("useremail")
+
+        SiteUsers.objects.create(
+            useremail=useremail
+        )
+        messages.success(
+            self.request,
+            "Ro'yxatdan o'tdingiz, tez orada siz bilan bog'lanishadi. Rahmat!",
+        )
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -77,8 +105,22 @@ class AboutView(TemplateView):
         return context
 
 
-class ServiceView(TemplateView):
+class ServiceView(FormView):
     template_name = "service.html"
+    form_class = UserCreateForm
+    success_url = reverse_lazy("restaurant:service")
+
+    def form_valid(self, form):
+        useremail = form.cleaned_data.get("useremail")
+
+        SiteUsers.objects.create(
+            useremail=useremail
+        )
+        messages.success(
+            self.request,
+            "Ro'yxatdan o'tdingiz, tez orada siz bilan bog'lanishadi. Rahmat!",
+        )
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -89,6 +131,20 @@ class ServiceView(TemplateView):
 class MenuView(ListView):
     template_name = 'menu.html'
     context_object_name = 'menu_types'
+    form_class = UserCreateForm
+    success_url = reverse_lazy("restaurant:menu")
+
+    def form_valid(self, form):
+        useremail = form.cleaned_data.get("useremail")
+
+        SiteUsers.objects.create(
+            useremail=useremail
+        )
+        messages.success(
+            self.request,
+            "Ro'yxatdan o'tdingiz, tez orada siz bilan bog'lanishadi. Rahmat!",
+        )
+        return super().form_valid(form)
 
     def get_queryset(self):
         return MenuType.objects.all()
@@ -127,8 +183,22 @@ class BookingView(FormView):
         )
 
 
-class TeamView(TemplateView):
+class TeamView(FormView):
     template_name = "team.html"
+    form_class = UserCreateForm
+    success_url = reverse_lazy("restaurant:team")
+
+    def form_valid(self, form):
+        useremail = form.cleaned_data.get("useremail")
+
+        SiteUsers.objects.create(
+            useremail=useremail
+        )
+        messages.success(
+            self.request,
+            "Ro'yxatdan o'tdingiz, tez orada siz bilan bog'lanishadi. Rahmat!",
+        )
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -136,8 +206,22 @@ class TeamView(TemplateView):
         return context
 
 
-class TestimonialView(TemplateView):
+class TestimonialView(FormView):
     template_name = "testimonial.html"
+    form_class = UserCreateForm
+    success_url = reverse_lazy("restaurant:testimonial")
+
+    def form_valid(self, form):
+        useremail = form.cleaned_data.get("useremail")
+
+        SiteUsers.objects.create(
+            useremail=useremail
+        )
+        messages.success(
+            self.request,
+            "Ro'yxatdan o'tdingiz, tez orada siz bilan bog'lanishadi. Rahmat!",
+        )
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -153,17 +237,3 @@ def worktimes(request):
 def contacts(request):
     home = Home.objects.first()
     return {"home": home}
-
-
-def site_user(request):
-    if request.method == "POST":
-        useremail = request.POST.get("useremail")
-        if useremail:  # Check if email is not empty
-            SiteUsers.objects.create(useremail=useremail)
-            return render(
-                request, "base.html", {"message": "Email saved successfully."}
-            )
-        else:
-            return render(request, "base.html", {"message": "Email field is empty."})
-    else:
-        return render(request, "base.html", {})

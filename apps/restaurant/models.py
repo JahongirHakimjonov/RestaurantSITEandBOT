@@ -53,6 +53,7 @@ class Home(AbstractBaseModel):
     twitter = models.URLField()
     telegram = models.URLField()
     youtube = models.URLField()
+    youtube_video = models.URLField()
     image = models.ImageField(upload_to="home/")
     logo = models.ImageField(upload_to="home/")
 

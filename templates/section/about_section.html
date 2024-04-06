@@ -6,12 +6,13 @@
                 <div class="row g-3">
                     {% for item in gallery %}
                         <div class="col-6 text-start">
-                            <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.1s"
+                            <img class="img-fluid rounded w-100 wow zoomIn animate-image" data-wow-delay="0.1s"
                                  src="/media/{{ item.image }}" alt="restoran">
                         </div>
                     {% endfor %}
                 </div>
             </div>
+        
             <div class="col-lg-6">
                 <h5 class="section-title ff-secondary text-start text-primary fw-normal">{{ about.title }}</h5>
                 <h2 class="mb-4">{{ home.name }}ga<img src="/media/{{ home.logo }}" alt="logo" class="img-fluid"

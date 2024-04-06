@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1")
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -23,9 +23,6 @@ INSTALLED_APPS = [
     "apps.shared.apps.SharedConfig",
     "apps.restaurant.apps.RestaurantConfig",
     "apps.users.apps.UsersConfig",
-    "rest_framework",
-    "drf_spectacular",
-    "drf_spectacular_sidecar",
 ]
 
 MIDDLEWARE = [
@@ -60,23 +57,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "core.wsgi.application"
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
-
 # DATABASES = {
 #     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": os.getenv("SQL_DATABASE"),
-#         "USER": os.getenv("SQL_USER"),
-#         "PASSWORD": os.getenv("SQL_PASSWORD"),
-#         "HOST": os.getenv("SQL_HOST"),
-#         "PORT": os.getenv("SQL_PORT"),
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
 #     }
 # }
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("SQL_DATABASE"),
+        "USER": os.getenv("SQL_USER"),
+        "PASSWORD": os.getenv("SQL_PASSWORD"),
+        "HOST": os.getenv("SQL_HOST"),
+        "PORT": os.getenv("SQL_PORT"),
+    }
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -125,12 +122,14 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = "/static/"
-STATICFILES_DIRS = [str(BASE_DIR.joinpath("static"))]
-STATIC_ROOT = str(BASE_DIR.joinpath("staticfiles"))
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = str(BASE_DIR.joinpath("media"))
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -138,6 +137,7 @@ JAZZMIN_SETTINGS = {
     "site_title": "ShinzoFamily Admin",
     "site_header": "ShinzoFamily Admin",
     "site_brand": "ShinzoFamily Admin",
+    "site_icon": "/image/logo.png",
     "welcome_sign": "Welcome to the ShinzoFamily Admin",
     "show_sidebar": True,
     "navigation_expanded": True,
@@ -180,6 +180,10 @@ JAZZMIN_SETTINGS = {
         "auth.group": "vertical_tabs",
     },
     "site_logo_classes": "img-circle",
+    "login_logo": "/image/login_logo.jpg",
+    "custom_css": "/css/custom.css",
+    "site_logo": "/image/login_logo.jpg",
+    "login_logo_dark": "/image/login_logo.jpg",
 }
 
 JAZZMIN_UI_TWEAKS = {
