@@ -26,6 +26,15 @@ from apps.users.models import SiteUsers
 class HomeView(TemplateView):
     template_name = "index.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["service"] = Services.objects.all()
+        context["about"] = About.objects.first()
+        context["gallery"] = Gallery.objects.filter(title="Restoran")
+        context["team"] = MasterChef.objects.all()
+        context["testimonial"] = Testimonial.objects.all()
+        return context
+
 
 class ContactView(FormView):
     template_name = "contact.html"
