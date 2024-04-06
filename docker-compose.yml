@@ -13,7 +13,7 @@ services:
       - .:/app
       - static_volume:/var/www/static
       - media_volume:/var/www/media
-      - /var/certbot/conf:/etc/letsencrypt/:ro
+      - /var/certbot/conf:/etc/letsencrypt/
     env_file:
       - env/.env
     depends_on:
