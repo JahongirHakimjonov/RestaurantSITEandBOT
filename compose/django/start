@@ -6,15 +6,10 @@ set -o nounset
 
 # Apply Django migrations
 python manage.py makemigrations
-python manage.py migrate --noinput
+python manage.py migrate
 
 # Collect static files
 python manage.py collectstatic --noinput
 
-gunicorn --config /app/gunicorn_config.py core.wsgi:application
-
-certbot --nginx --non-interactive --agree-tos --email jahongirhakimjonov@gmail.com --domains shinzofamily.uz
-
-
 # Run Gunicorn server
-#exec gunicorn core.wsgi:application --bind 0.0.0.0:8000
+exec gunicorn core.wsgi:application --bind 0.0.0.0:8000
