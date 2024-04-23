@@ -46,18 +46,9 @@ services:
     volumes:
       - static_volume:/app/staticfiles
       - media_volume:/app/media
-      - certbot-etc:/etc/letsencrypt
 
-  certbot:
-    image: certbot/certbot
-    volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
-    command: certonly --webroot --webroot-path=/var/lib/letsencrypt --email jahongirhakimjonov@gmail.com --agree-tos --no-eff-email --staging -d shinzofamily.uz -d www.shinzofamily.uz
 
 volumes:
   media_volume:
   static_volume:
   postgres_data:
-  certbot-etc:
-  certbot-var:
