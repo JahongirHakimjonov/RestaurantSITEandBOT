@@ -131,7 +131,7 @@ class Testimonial(AbstractBaseModel):
 class Services(AbstractBaseModel):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    image = models.ImageField(upload_to="services/", null=True, blank=True, default='/static/image/logo.png')
+    image = models.ImageField(upload_to="services/", null=True, blank=True, default='/static/image/black_logo.png')
 
     class Meta:
         verbose_name = "Service"
