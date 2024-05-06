@@ -18,17 +18,17 @@ services:
     depends_on:
       - db
 
-  db:
-    image: postgres:15-alpine
-    container_name: restaurant_db
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=restaurant
-      - POSTGRES_PASSWORD=1253
-    ports:
-      - "5432:5432"
+#  db:
+#    image: postgres:15-alpine
+#    container_name: restaurant_db
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+#    environment:
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_DB=restaurant
+#      - POSTGRES_PASSWORD=1253
+#    ports:
+#      - "5432:5432"
 
   nginx:
     build:
